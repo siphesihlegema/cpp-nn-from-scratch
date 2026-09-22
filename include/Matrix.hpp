@@ -11,6 +11,7 @@ private:
   std::vector<float> data_;
 
 public:
+  Matrix(std::size_t rows, std::size_t col, float init_value = 0.0f);
   Matrix(std::size_t rows, std::size_t col, std::vector<float> data);
 
   // getters
