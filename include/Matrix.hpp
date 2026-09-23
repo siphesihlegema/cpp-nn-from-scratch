@@ -24,4 +24,11 @@ public:
 
   // matrix transpose
   Matrix transpose() const;
+
+  // in place operations
+  Matrix &operator+=(const Matrix &rhs);
+  Matrix &operator-=(const Matrix &rhs);
 };
+// binary operations
+inline Matrix operator+(Matrix lhs, const Matrix &rhs);
+inline Matrix operator-(Matrix lhs, const Matrix &rhs);
