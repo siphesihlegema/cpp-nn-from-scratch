@@ -17,6 +17,7 @@ public:
   // getters
   std::size_t rows() { return rows_; }
   std::size_t col() { return col_; }
+  std::vector<float> data() { return data_; }
 
   // data access
   float &operator()(std::size_t r, std::size_t c);
@@ -30,5 +31,11 @@ public:
   Matrix &operator-=(const Matrix &rhs);
 };
 // binary operations
-inline Matrix operator+(Matrix lhs, const Matrix &rhs);
-inline Matrix operator-(Matrix lhs, const Matrix &rhs);
+inline Matrix operator+(Matrix lhs, const Matrix &rhs) {
+  lhs += rhs;
+  return lhs;
+}
+inline Matrix operator-(Matrix lhs, const Matrix &rhs) {
+  lhs -= rhs;
+  return lhs;
+}
