@@ -9,5 +9,8 @@ int main() {
 
   Matrix test2(3, 3);
 
-  std::cout << test(0, 1) << trantest(0, 1);
+  std::cout << test(0, 1) << trantest(0, 1) << "\n";
+  test += test2;
+
+  std::cout << test(0, 1) << "\n";
 }
