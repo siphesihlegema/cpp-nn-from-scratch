@@ -28,3 +28,15 @@ Matrix Matrix::transpose() const {
 
   return Matrix(col_, rows_, std::move(transposed));
 }
+Matrix &Matrix::operator+=(const Matrix &rhs) {
+  for (std::size_t i = 0; i < data_.size(); ++i) {
+    data_[i] += rhs.data_[i];
+  }
+  return *this;
+}
+Matrix &Matrix::operator-=(const Matrix &rhs) {
+  for (std::size_t i = 0; i < data_.size(); ++i) {
+    data_[i] -= rhs.data_[i];
+  }
+  return *this;
+}
