@@ -45,8 +45,15 @@ Matrix &Matrix::operator-=(const Matrix &rhs) {
 
 Matrix Matrix::hadamard(const Matrix &a, const Matrix &b) {
   Matrix result(a.rows_, a.col_);
-  for (std::size_t i = 0; i < a.data_.size(); ++i) {
-    result.data_[i] = a.data_[i] * b.data_[i];
+
+  const float *a_ptr = a.data();
+  const float *b_ptr = b.data();
+  float *out_ptr = result.data();
+
+  const std::size_t size = a.rows_ * a.col_;
+
+  for (std::size_t i = 0; i < size; ++i) {
+    out_ptr[i] = a_ptr[i] * b_ptr[i];
   }
   return result;
 }
