@@ -28,15 +28,25 @@ Matrix Matrix::transpose() const {
 
   return Matrix(col_, rows_, std::move(transposed));
 }
+
 Matrix &Matrix::operator+=(const Matrix &rhs) {
   for (std::size_t i = 0; i < data_.size(); ++i) {
     data_[i] += rhs.data_[i];
   }
   return *this;
 }
+
 Matrix &Matrix::operator-=(const Matrix &rhs) {
   for (std::size_t i = 0; i < data_.size(); ++i) {
     data_[i] -= rhs.data_[i];
   }
   return *this;
+}
+
+Matrix Matrix::hadamard(const Matrix &a, const Matrix &b) {
+  Matrix result(a.rows_, a.col_);
+  for (std::size_t i = 0; i < a.data_.size(); ++i) {
+    result.data_[i] = a.data_[i] * b.data_[i];
+  }
+  return result;
 }
