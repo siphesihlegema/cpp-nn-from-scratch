@@ -13,4 +13,8 @@ int main() {
   test += test2;
 
   std::cout << test(0, 1) << "\n";
+
+  Matrix added = test + test2;
+  added = added - test + trantest;
+  std::cout << added(0, 0) << "\n";
 }
