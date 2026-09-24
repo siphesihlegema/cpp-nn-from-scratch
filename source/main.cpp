@@ -18,5 +18,8 @@ int main() {
   added = added - test + trantest;
   std::cout << added(0, 0) << "\n";
 
-  Matrix result = Matrix::hadamard(added, test2);
+  Matrix result = Matrix::hadamard(test, test);
+
+  const float *ptr = result.data();
+  std::cout << "second element: " << ptr[1] << "\n";
 }
