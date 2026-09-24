@@ -11,6 +11,7 @@ private:
   std::vector<float> data_;
 
 public:
+  Matrix();
   Matrix(std::size_t rows, std::size_t col, float init_value = 0.0f);
   Matrix(std::size_t rows, std::size_t col, std::vector<float> data);
 
@@ -29,12 +30,17 @@ public:
   // in place operations
   Matrix &operator+=(const Matrix &rhs);
   Matrix &operator-=(const Matrix &rhs);
+
+  // Hadamard product
+  static Matrix hadamard(const Matrix &a, const Matrix &b);
 };
+
 // binary operations
 inline Matrix operator+(Matrix lhs, const Matrix &rhs) {
   lhs += rhs;
   return lhs;
 }
+
 inline Matrix operator-(Matrix lhs, const Matrix &rhs) {
   lhs -= rhs;
   return lhs;
