@@ -17,4 +17,6 @@ int main() {
   Matrix added = test + test2;
   added = added - test + trantest;
   std::cout << added(0, 0) << "\n";
+
+  Matrix result = Matrix::hadamard(added, test2);
 }
