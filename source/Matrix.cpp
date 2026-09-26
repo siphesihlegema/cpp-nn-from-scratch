@@ -1,4 +1,7 @@
+#include <cmath>
+
 #include <cstddef>
+#include <random>
 #include <vector>
 
 #include "Matrix.hpp"
@@ -93,4 +96,25 @@ Matrix Matrix::multiply(const Matrix &a, const Matrix &b) {
   }
 
   return result;
+}
+
+Matrix Matrix::random_uniform(size_t r, size_t c, float low, float high) {
+  std::vector<float> randomvec(r * c);
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<float> dist(low, high);
+
+  std::size_t size(r * c);
+
+  for (std::size_t i = 0; i < size; ++i) {
+    randomvec[i] = dist(gen);
+  }
+
+  return Matrix(r, c, randomvec);
+}
+
+Matrix Matrix::xavier(size_t r, size_t c) {
+  float limit = std::sqrt(6.0f / static_cast<float>(r + c));
+  return Matrix::random_uniform(r, c, -limit, limit);
 }

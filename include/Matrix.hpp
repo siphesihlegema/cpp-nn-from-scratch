@@ -37,6 +37,12 @@ public:
 
   // cache-aware multiplication
   static Matrix multiply(const Matrix &a, const Matrix &b);
+
+  // initialise matrix with uniformly distributed values
+  static Matrix random_uniform(size_t r, size_t c, float low, float high);
+
+  // Xavier (Glorot) Initialization
+  static Matrix xavier(size_t r, size_t c);
 };
 
 // binary operations
