@@ -43,6 +43,15 @@ Matrix &Matrix::operator-=(const Matrix &rhs) {
   return *this;
 }
 
+Matrix &Matrix::operator*=(float scalar) {
+  float *ptr = data_.data();
+  const std::size_t size = data_.size();
+  for (std::size_t i = 0; i < size; ++i) {
+    ptr[i] *= scalar;
+  }
+  return *this;
+}
+
 Matrix Matrix::hadamard(const Matrix &a, const Matrix &b) {
   Matrix result(a.rows_, a.col_);
 

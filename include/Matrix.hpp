@@ -30,6 +30,7 @@ public:
   // in place operations
   Matrix &operator+=(const Matrix &rhs);
   Matrix &operator-=(const Matrix &rhs);
+  Matrix &operator*=(float scalar);
 
   // Hadamard product
   static Matrix hadamard(const Matrix &a, const Matrix &b);
@@ -47,4 +48,14 @@ inline Matrix operator+(Matrix lhs, const Matrix &rhs) {
 inline Matrix operator-(Matrix lhs, const Matrix &rhs) {
   lhs -= rhs;
   return lhs;
+}
+
+inline Matrix operator*(Matrix mat, float scalar) {
+  mat *= scalar;
+  return mat;
+}
+
+inline Matrix operator*(float scalar, Matrix &mat) {
+  mat *= scalar;
+  return mat;
 }
