@@ -57,3 +57,31 @@ Matrix Matrix::hadamard(const Matrix &a, const Matrix &b) {
   }
   return result;
 }
+
+Matrix Matrix::multiply(const Matrix &a, const Matrix &b) {
+
+  std::size_t M = a.rows();
+  std::size_t K = a.col();
+  std::size_t N = b.col();
+
+  Matrix result(M, N);
+
+  const float *a_ptr = a.data();
+  const float *b_ptr = b.data();
+  float *c_ptr = result.data();
+
+  for (std::size_t i = 0; i < M; ++i) {
+    for (std::size_t k = 0; k < K; ++k) {
+      const float a_ik = a_ptr[i * K + k];
+
+      const std::size_t b_offset = k * N;
+      const std::size_t c_offset = i * N;
+
+      for (std::size_t j = 0; j < N; ++j) {
+        c_ptr[c_offset + j] += a_ik * b_ptr[b_offset + j];
+      }
+    }
+  }
+
+  return result;
+}

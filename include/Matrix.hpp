@@ -15,8 +15,8 @@ public:
   Matrix(std::size_t rows, std::size_t col, std::vector<float> data);
 
   // getters
-  std::size_t rows() { return rows_; }
-  std::size_t col() { return col_; }
+  std::size_t rows() const { return rows_; }
+  std::size_t col() const { return col_; }
   float *data() { return data_.data(); }
   const float *data() const { return data_.data(); }
 
@@ -33,6 +33,9 @@ public:
 
   // Hadamard product
   static Matrix hadamard(const Matrix &a, const Matrix &b);
+
+  // cache-aware multiplication
+  static Matrix multiply(const Matrix &a, const Matrix &b);
 };
 
 // binary operations
