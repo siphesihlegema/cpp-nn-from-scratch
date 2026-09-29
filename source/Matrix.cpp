@@ -118,3 +118,31 @@ Matrix Matrix::xavier(size_t r, size_t c) {
   float limit = std::sqrt(6.0f / static_cast<float>(r + c));
   return Matrix::random_uniform(r, c, -limit, limit);
 }
+
+void Matrix::add_bias(const Matrix &bias) {
+  const float *bias_ptr = bias.data();
+  float *mat_ptr = data_.data();
+
+  for (std::size_t r = 0; r < rows_; ++r) {
+    std::size_t row_offset = r * col_;
+    for (std::size_t c = 0; c < col_; ++c) {
+      mat_ptr[row_offset + c] += bias_ptr[c];
+    }
+  }
+}
+
+Matrix Matrix::sum_rows() const {
+  Matrix result(1, col_, 0.0f);
+
+  const float *in_ptr = data_.data();
+  float *out_ptr = result.data();
+
+  for (std::size_t r = 0; r < rows_; ++r) {
+    std::size_t row_offset = r * col_;
+    for (std::size_t c = 0; c < col_; ++c) {
+      out_ptr[c] += in_ptr[row_offset + c];
+    }
+  }
+
+  return result;
+}

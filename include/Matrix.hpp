@@ -43,6 +43,12 @@ public:
 
   // Xavier (Glorot) Initialization
   static Matrix xavier(size_t r, size_t c);
+
+  // add bias to matrix
+  void add_bias(const Matrix &bias);
+
+  // sum cols of gradients to produce gradient vector
+  Matrix sum_rows() const;
 };
 
 // binary operations
