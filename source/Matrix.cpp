@@ -6,7 +6,7 @@
 
 #include "Matrix.hpp"
 
-Matrix::Matrix(std::size_t rows, std::size_t col, float init_value)
+Matrix::Matrix(std::size_t rows, std::size_t col, float init_value = 0.0f)
     : rows_(rows), col_(col), data_(rows * col, init_value) {}
 
 Matrix::Matrix(std::size_t rows, std::size_t col, std::vector<float> data)
@@ -33,15 +33,23 @@ Matrix Matrix::transpose() const {
 }
 
 Matrix &Matrix::operator+=(const Matrix &rhs) {
-  for (std::size_t i = 0; i < data_.size(); ++i) {
-    data_[i] += rhs.data_[i];
+  const float *ptr = rhs.data();
+  float *out_ptr = data_.data();
+  const std::size_t size = data_.size();
+
+  for (std::size_t i = 0; i < size; ++i) {
+    out_ptr[i] += ptr[i];
   }
   return *this;
 }
 
 Matrix &Matrix::operator-=(const Matrix &rhs) {
-  for (std::size_t i = 0; i < data_.size(); ++i) {
-    data_[i] -= rhs.data_[i];
+  const float *ptr = rhs.data();
+  float *out_ptr = data_.data();
+  const std::size_t size = data_.size();
+
+  for (std::size_t i = 0; i < size; ++i) {
+    out_ptr[i] -= ptr[i];
   }
   return *this;
 }
