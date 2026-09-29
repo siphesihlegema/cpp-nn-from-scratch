@@ -17,6 +17,7 @@ public:
   // getters
   std::size_t rows() const { return rows_; }
   std::size_t col() const { return col_; }
+  std::size_t size() const { return data_.size(); }
   float *data() { return data_.data(); }
   const float *data() const { return data_.data(); }
 
