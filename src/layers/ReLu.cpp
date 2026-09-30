@@ -16,3 +16,19 @@ Matrix ReLu::forward(const Matrix &input) {
   }
   return out;
 }
+
+Matrix ReLu::backward(const Matrix &output_grad) {
+  Matrix dX(output_grad.rows(), output_grad.col());
+
+  const float *grad_ptr = output_grad.data();
+  const float *cache_ptr = input_cache_.data();
+  float *dx_ptr = dX.data();
+
+  for (std::size_t i = 0; i < output_grad.size(); ++i) {
+    if (cache_ptr[i] > 0.0f) {
+      dx_ptr[i] = grad_ptr[i];
+    }
+  }
+
+  return dX;
+}
