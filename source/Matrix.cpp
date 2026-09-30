@@ -54,9 +54,8 @@ Matrix &Matrix::operator+=(const Matrix &rhs) {
 
   const float *ptr = rhs.data();
   float *out_ptr = data_.data();
-  const std::size_t size = data_.size();
 
-  for (std::size_t i = 0; i < size; ++i) {
+  for (std::size_t i = 0; i < this->size(); ++i) {
     out_ptr[i] += ptr[i];
   }
   return *this;
@@ -70,9 +69,8 @@ Matrix &Matrix::operator-=(const Matrix &rhs) {
   }
   const float *ptr = rhs.data();
   float *out_ptr = data_.data();
-  const std::size_t size = data_.size();
 
-  for (std::size_t i = 0; i < size; ++i) {
+  for (std::size_t i = 0; i < this->size(); ++i) {
     out_ptr[i] -= ptr[i];
   }
   return *this;
@@ -80,8 +78,8 @@ Matrix &Matrix::operator-=(const Matrix &rhs) {
 
 Matrix &Matrix::operator*=(float scalar) {
   float *ptr = data_.data();
-  const std::size_t size = data_.size();
-  for (std::size_t i = 0; i < size; ++i) {
+
+  for (std::size_t i = 0; i < this->size(); ++i) {
     ptr[i] *= scalar;
   }
   return *this;
