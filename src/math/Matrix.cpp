@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "Matrix.hpp"
+#include "math/Matrix.hpp"
 
 std::string shape_str(std::size_t r, std::size_t c) {
   return "(" + std::to_string(r) + "x" + std::to_string(c) + ")";
