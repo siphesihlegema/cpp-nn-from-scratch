@@ -1,8 +1,9 @@
-#include "layers/Sigmoid.hpp"
-
 #include <cmath>
+
 #include <stdexcept>
 #include <string>
+
+#include "layers/Sigmoid.hpp"
 
 #include "math/Matrix.hpp"
 
@@ -18,29 +19,4 @@ Matrix Sigmoid::forward(const Matrix &input) {
 
   output_cache_ = out;
   return out;
-}
-
-Matrix Sigmoid::backward(const Matrix &output_grad) {
-  if (output_grad.rows() != output_cache_.rows() ||
-      output_grad.col() != output_cache_.col()) {
-    throw std::invalid_argument(
-        "Sigmoid backward shape mismatch: output_grad (" +
-        std::to_string(output_grad.rows()) + "x" +
-        std::to_string(output_grad.col()) + ") does not match output_cache (" +
-        std::to_string(output_cache_.rows()) + "x" +
-        std::to_string(output_cache_.col()) + ")");
-  }
-
-  Matrix dX(output_grad.rows(), output_grad.col(), 0.0f);
-
-  const float *grad_ptr = output_grad.data();
-  const float *cache_ptr = output_cache_.data();
-  float *dx_ptr = dX.data();
-
-  for (std::size_t i = 0; i < output_grad.size(); ++i) {
-    const float s = cache_ptr[i];
-    dx_ptr[i] = grad_ptr[i] * s * (1.0f - s);
-  }
-
-  return dX;
 }
