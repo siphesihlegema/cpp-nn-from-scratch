@@ -1,8 +1,5 @@
 #include <cmath>
 
-#include <stdexcept>
-#include <string>
-
 #include "layers/Sigmoid.hpp"
 
 #include "math/Matrix.hpp"
