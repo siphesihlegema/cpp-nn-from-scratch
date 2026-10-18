@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include "Layer.hpp"
 
 #include "math/Matrix.hpp"
@@ -11,6 +13,7 @@ private:
   Matrix dB_;
 
 public:
+  Dense(std::size_t input_feat, std::size_t output_feat);
   Matrix forward(const Matrix &input) override;
   Matrix backward(const Matrix &output_grad) override;
 };
