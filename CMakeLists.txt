@@ -36,7 +36,7 @@ target_compile_options(nn_core PRIVATE
 )
 
 # Uses src/math/main.cpp
-add_executable(main.out "${CMAKE_CURRENT_SOURCE_DIR}/src/math/main.cpp")
+add_executable(main.out "${CMAKE_CURRENT_SOURCE_DIR}/app/main.cpp")
 
 target_link_libraries(main.out PRIVATE nn_core)
 
