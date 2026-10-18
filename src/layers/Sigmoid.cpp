@@ -17,3 +17,5 @@ Matrix Sigmoid::forward(const Matrix &input) {
   output_cache_ = out;
   return out;
 }
+
+Matrix Sigmoid::backward(const Matrix &output_grad) { return output_grad; }

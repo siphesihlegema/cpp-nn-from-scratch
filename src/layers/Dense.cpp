@@ -1,5 +1,3 @@
-#include <cstddef>
-
 #include "layers/Dense.hpp"
 
 #include "cstddef"
@@ -16,3 +14,5 @@ Matrix Dense::forward(const Matrix &input) {
   Z.add_bias(B_);
   return Z;
 }
+
+Matrix Dense::backward(const Matrix &output_grad) { return output_grad; }
