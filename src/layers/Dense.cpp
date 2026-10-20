@@ -15,4 +15,8 @@ Matrix Dense::forward(const Matrix &input) {
   return Z;
 }
 
-Matrix Dense::backward(const Matrix &output_grad) { return output_grad; }
+Matrix Dense::backward(const Matrix &output_grad) {
+  dW_ = Matrix::multiply(input_cache_.transpose(), output_grad);
+  dB_ = output_grad.sum_rows();
+  return Matrix::multiply(output_grad, W_.transpose());
+}
