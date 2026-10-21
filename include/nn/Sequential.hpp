@@ -9,4 +9,5 @@ private:
 public:
   void add(std::unique_ptr<Layer> layer);
   Matrix forward(Matrix x);
+  Matrix backward(Matrix x);
 };
