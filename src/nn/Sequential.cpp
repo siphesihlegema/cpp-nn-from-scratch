@@ -20,3 +20,9 @@ Matrix Sequential::backward(Matrix grad) {
   }
   return grad;
 }
+
+void Sequential::update_parameters(float learning_rate) {
+  for (auto &layer : layers_ | std::views::reverse) {
+    layer->update_parameters(learning_rate);
+  }
+}
