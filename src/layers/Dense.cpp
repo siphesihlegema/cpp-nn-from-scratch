@@ -20,3 +20,8 @@ Matrix Dense::backward(const Matrix &output_grad) {
   dB_ = output_grad.sum_rows();
   return Matrix::multiply(output_grad, W_.transpose());
 }
+
+void Dense::update_parameters(float learning_rate) {
+  W_ = W_ - learning_rate * dW_;
+  B_ = B_ - learning_rate * dB_;
+};
