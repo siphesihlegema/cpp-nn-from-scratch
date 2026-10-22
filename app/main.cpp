@@ -8,6 +8,8 @@
 #include "layers/ReLu.hpp"
 #include "layers/Sigmoid.hpp"
 
+#include "loss/MSEloss.hpp"
+
 #include "math/Matrix.hpp"
 
 #include "nn/Sequential.hpp"
@@ -44,19 +46,82 @@ int main() {
   x_data[3 * 2 + 0] = 1.0f;
   x_data[3 * 2 + 1] = 1.0f;
 
-  print_matrix("Input X", X);
+  // 2. Construct XOR target batch: shape (4 x 1)
+  Matrix Y(4, 1);
+  float *y_data = Y.data();
 
+  y_data[0] = 0.0f;
+  y_data[1] = 1.0f;
+  y_data[2] = 1.0f;
+  y_data[3] = 0.0f;
+
+  print_matrix("Input X", X);
+  print_matrix("Target Y", Y);
+
+  // 3. Define Neural Network Architecture
   Sequential model;
   model.add(std::make_unique<Dense>(2, 4));
-  model.add(std::make_unique<ReLu>());
+  model.add(std::make_unique<Sigmoid>());
   model.add(std::make_unique<Dense>(4, 1));
   model.add(std::make_unique<Sigmoid>());
 
-  Matrix y_pred = model.forward(X);
-  assert(y_pred.rows() == 4 && y_pred.col() == 1 &&
-         "y_pred shape mismatch: expected (4x1)");
+  // Initial predictions before training
+  Matrix initial_pred = model.forward(X);
+  print_matrix("Predictions BEFORE Training", initial_pred);
 
-  print_matrix("Output Prediction Y_pred", y_pred);
+  // 4. Training Loop setup
+  MSEloss loss_fn;
+  const float learning_rate = 1.0f;
+  const int epochs = 100000;
+
+  std::cout << "Starting Training (" << epochs
+            << " epochs, learning rate = " << learning_rate << ")...\n";
+  std::cout << "--------------------------------------------------\n";
+
+  for (int epoch = 1; epoch <= epochs; ++epoch) {
+    // Forward pass
+    Matrix y_pred = model.forward(X);
+
+    // Compute loss
+    float loss = loss_fn.forward(y_pred, Y);
+
+    // Backward pass
+    Matrix loss_grad = loss_fn.backward(y_pred, Y);
+    model.backward(loss_grad);
+
+    // Update parameters
+    model.update_parameters(learning_rate);
+
+    if (epoch == 1 || epoch % 1000 == 0 || epoch == epochs) {
+      std::cout << "Epoch " << std::setw(5) << epoch
+                << " | MSE Loss: " << std::fixed << std::setprecision(6) << loss
+                << "\n";
+    }
+  }
+
+  std::cout << "--------------------------------------------------\n\n";
+
+  // 5. Final Evaluation
+  Matrix final_pred = model.forward(X);
+  print_matrix("Predictions AFTER Training", final_pred);
+
+  // Verify accuracy threshold for XOR
+  const float *preds = final_pred.data();
+  bool success = true;
+  for (std::size_t i = 0; i < 4; ++i) {
+    float expected = y_data[i];
+    float actual = preds[i];
+    float rounded = actual >= 0.5f ? 1.0f : 0.0f;
+    if (rounded != expected) {
+      success = false;
+    }
+  }
+
+  if (success) {
+    std::cout << "XOR Neural Network training completed successfully!\n";
+  } else {
+    std::cout << "XOR Neural Network training did not converge completely.\n";
+  }
 
   return 0;
 }
