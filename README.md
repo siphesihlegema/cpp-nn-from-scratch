@@ -7,25 +7,22 @@
 
 A lightweight, zero-dependency deep learning framework written in modern C++20. 
 
+## Features
+**Custom Linear Algebra Core (`Matrix`):** Contiguous 1D row-major memory buffer (`std::vector<float>`) with cache-friendly `i -> k -> j` loop ordering for General Matrix Multiplication (GEMM), row-wise bias broadcasting, reductions, and Xavier/Glorot weight initialization.
 
----
+**PyTorch-Inspired Modular API (`Sequential`):** Stack layers polymorphically using `std::unique_ptr<Layer>` with clean `forward()`, `backward()`, and `update_parameters()` passes.
 
-## Key Features
+**Hand-Derived Analytical Gradients:** Every layer and loss function computes exact analytical Jacobians during the backward pass—no black-box autograd overhead.
 
-* **Custom Linear Algebra Core (`Matrix`):** Contiguous 1D row-major memory buffer (`std::vector<float>`) with cache-friendly `i -> k -> j` loop ordering for General Matrix Multiplication (GEMM), row-wise bias broadcasting, reductions, and Xavier/Glorot weight initialization.
-* **PyTorch-Inspired Modular API (`Sequential`):** Stack layers polymorphically using `std::unique_ptr<Layer>` with clean `forward()`, `backward()`, and `update_parameters()` passes.
-* **Hand-Derived Analytical Gradients:** Every layer and loss function computes exact analytical Jacobians during the backward pass—no black-box autograd overhead.
-* **Zero External Dependencies:** Compiles cleanly with any standard C++20 compiler and CMake.
-
----
+**Zero External Dependencies:** Compiles cleanly with any standard C++20 compiler and CMake.
 
 ## Architecture & Mathematical Foundations
 
 ### Memory Layout & Tensor Shapes
 All matrices are stored in a flat, contiguous 1D array using row-major indexing ($r \cdot \text{cols} + c$) to maximize CPU L1/L2 cache line utilization. Mini-batches are processed with one sample per row:
-* **Input Batch ($X$):** shape $(B \times D_{\text{in}})$
-* **Weights ($W$):** shape $(D_{\text{in}} \times D_{\text{out}})$, initialized via Xavier/Glorot uniform bounds $\pm\sqrt{\frac{6}{D_{\text{in}} + D_{\text{out}}}}$
-* **Biases ($b$):** shape $(1 \times D_{\text{out}})$, broadcast across all $B$ rows
+**Input Batch ($X$):** shape $(B \times D_{\text{in}})$
+**Weights ($W$):** shape $(D_{\text{in}} \times D_{\text{out}})$, initialized via Xavier/Glorot uniform bounds $\pm\sqrt{\frac{6}{D_{\text{in}} + D_{\text{out}}}}$
+**Biases ($b$):** shape $(1 \times D_{\text{out}})$, broadcast across all $B$ rows
 
 ### The `Layer` Contract
 Every neural network component implements the base `Layer` interface, caching intermediate state during `forward()` required to compute upstream and parameter gradients during `backward()`:
@@ -40,7 +37,7 @@ public:
 };
 ```
 
-## Quick Start Example (Training XOR)
+## Example (Training XOR)
 
 ```cpp
 #include "layers/Dense.hpp"
@@ -75,7 +72,7 @@ int main() {
 
 ---
 
-## Project Structure
+## Structure
 
 ```text
 cpp-nn-from-scratch/
